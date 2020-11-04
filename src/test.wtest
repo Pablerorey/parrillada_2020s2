@@ -1,3 +1,66 @@
 import comidas.*
 import comensales.*
 import cocina.*
+
+describe "test" {
+	const hambCarne = new HamburguesasDeCarne(pan = casero, peso = 250)
+	const hambCarne2 = new HamburguesasDeCarne(pan = deMasaMadre, peso = 250)
+	const hambVeggie = new HamburguesasVegetarianas(pan = deMasaMadre, legumbre = "garbanzos", peso = 250)
+	const provo = new Provoleta(peso = 190, especias = true)
+	const asado = new Corte(nombre = "asado", calidad = 10, pesoDelCorte = 250)
+	const entr = new Corte(calidad = 7, pesoDelCorte = 200)
+	const chor = new Corte(calidad = 8, pesoDelCorte = 50)
+	const parri = new Parrillada(peso = 0)
+	const comensalVeggie = new Vegetarianos(peso = 68500)
+	const comensalPopu = new HambrePopular(peso = 85000)
+	const comensalFino = new DePaladarFino()
+	
+fixture {
+	parri.agregarCortes([asado, entr, chor])
+	comensalVeggie.comer(provo)
+	comensalVeggie.comer(hambVeggie)
+	comensalVeggie.comer(hambVeggie)
+	comensalPopu.comer(parri)
+}
+	
+	test "valoracion de la Hmb con pan casero" {
+		assert.equals(80, hambCarne.valoracion())
+	}
+	
+	test "valoracion de la Hmb veggie" {
+		assert.equals(122, hambVeggie.valoracion())
+	}
+	
+	test "provoleta especial" {
+		assert.that(provo.esEspecial())
+	}
+	
+	test "valoracion Parrillada"{
+		assert.equals(147, parri.valoracion())
+	}
+	
+	test "veggie satisfecho" {
+		assert.that(comensalVeggie.satisfecho())
+	}
+	
+	test "popu satisfecho" {
+		assert.notThat(comensalPopu.satisfecho())
+	}
+	
+	test "Paladar Fino" {
+		assert.that(comensalFino.leAgrada(hambCarne2))
+	}
+	
+	test "Paladar Fino 2" {
+		assert.notThat(comensalFino.leAgrada(hambCarne))
+	}
+}
+	
+	
+	
+	
+	
+	
+	
+	
+
